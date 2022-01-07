@@ -1,0 +1,12 @@
+.wrapper {
+    display: flex;
+    justify-content: space-around;
+    background-color: lightgray;
+    padding: 10px 0;
+}
+
+.wrapper_item {
+    cursor: pointer;
+    list-style-type: none;
+    text-decoration: none;
+}

@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
-import {ProductType, setAllProductsTC, setProductsTC} from "../main/bll/reducers/productReducer";
+import {ProductType, setAllProductsTC, setProductsTC} from "../../main/bll/reducers/productReducer";
 import {useDispatch, useSelector} from "react-redux";
-import {RootStateType} from "../main/bll/store/store";
-import ProductComponent from "./ProductComponent";
+import {RootStateType} from "../../main/bll/store/store";
+import ProductComponent from "../ProductComponent";
 
 const ShowProducts = () => {
     const dispatch = useDispatch()

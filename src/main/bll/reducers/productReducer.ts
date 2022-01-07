@@ -1,4 +1,5 @@
 import {Dispatch} from "redux";
+import {API} from "../../dal/API";
 
 const SET_PRODUCTS = 'SET_PRODUCTS';
 const SET_ALL_PRODUCTS = 'SET_ALL_PRODUCTS';
@@ -46,13 +47,13 @@ const setAllProductsAC = (products: Array<ProductType>) => ({
 
 // ThunkCreators
 export const setProductsTC = () => (dispatch: Dispatch) => {
-    fetch('https://fakestoreapi.com/products?limit=8')
+    API.getProducts()
         .then(res => res.json())
         .then(json => dispatch(setProductsAC(json)))
 }
 
 export const setAllProductsTC = () => (dispatch: Dispatch) => {
-    fetch('https://fakestoreapi.com/products')
+    API.getAllProducts()
         .then(res => res.json())
         .then(json => dispatch(setAllProductsAC(json)))
 }
