@@ -10,3 +10,8 @@
     list-style-type: none;
     text-decoration: none;
 }
+
+.wrapper_item:hover {
+    transition-duration: 500ms;
+    text-shadow: 1px 1px 2px black;
+}

@@ -9,7 +9,7 @@ const ProductComponent: React.FC<PropsType> = ({product}) => {
 
     return (
         <div>
-            <div>{product.image}</div>
+            <div><img style={{width: '80px'}} src={product.image} alt="img"/></div>
             <div>{product.title}</div>
             <div>{product.price}</div>
         </div>
