@@ -9,5 +9,8 @@ export const API = {
     },
     getAllProducts: () => {
         return fetch('https://fakestoreapi.com/products')
+    },
+    getProductId: (productId: number) => {
+        return fetch(`https://fakestoreapi.com/products/${productId}`)
     }
 }

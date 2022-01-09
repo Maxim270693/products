@@ -1,0 +1,9 @@
+.items_item {
+    text-align: center;
+}
+
+.items_item img {
+    width: 190px;
+    text-align: center;
+    padding: 35px 0;
+}

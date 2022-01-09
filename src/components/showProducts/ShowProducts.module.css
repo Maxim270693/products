@@ -1,17 +1,15 @@
-.wrapper {
+.title {
+    padding-top: 40px;
+    letter-spacing: 0.04em;
+    font-size: 38px;
+    text-transform: uppercase;
+    text-shadow: 1px 5px 6px #000;
+}
+
+.items {
     display: flex;
-    justify-content: space-around;
-    background-color: lightgray;
-    padding: 10px 0;
-}
-
-.wrapper_item {
-    cursor: pointer;
-    list-style-type: none;
-    text-decoration: none;
-}
-
-.wrapper_item:hover {
-    transition-duration: 500ms;
-    text-shadow: 1px 1px 2px black;
+    /*width: 800px;*/
+    flex-wrap: wrap;
+    align-items: baseline;
+    margin: 40px 0 0 30px;
 }

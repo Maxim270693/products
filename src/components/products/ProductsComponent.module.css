@@ -1,0 +1,9 @@
+.items {
+    max-width: 200px;
+    padding: 40px;
+}
+
+.items_item img {
+    cursor: pointer;
+    width: 80px;
+}

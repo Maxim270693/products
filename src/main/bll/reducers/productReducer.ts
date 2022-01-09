@@ -5,6 +5,7 @@ const SET_PRODUCTS = 'SET_PRODUCTS';
 const SET_PART_PRODUCTS = 'SET_PART_PRODUCTS';
 const SET_ALL_PRODUCTS = 'SET_ALL_PRODUCTS';
 const IS_LOADING = 'IS_LOADING';
+const SET_PRODUCT = 'SET_PRODUCT';
 
 
 export type ProductType = {
@@ -22,12 +23,14 @@ export type ProductType = {
 
 type InitialStateType = {
     products: Array<ProductType>
+    product: ProductType
     isLoading: boolean
 }
 
 const initialState = {
     products: [] as Array<ProductType>,
-    isLoading: false
+    product: {} as ProductType,
+    isLoading: false,
 }
 
 export const productsReducer = (state = initialState, action: ActionTypes): InitialStateType => {
@@ -40,6 +43,11 @@ export const productsReducer = (state = initialState, action: ActionTypes): Init
             return {...state, products: action.products}
         case IS_LOADING:
             return {...state, isLoading: action.value}
+        case SET_PRODUCT:
+            return {
+                ...state,
+                product: action.payload
+            }
         default:
             return state
     }
@@ -56,6 +64,7 @@ const setAllProductsAC = (products: Array<ProductType>) => ({
     products
 } as const)
 const loadingSpinnerAC = (value: boolean) => ({type: IS_LOADING, value} as const)
+const setProductAC = (payload: ProductType) => ({type: SET_PRODUCT, payload} as const)
 
 
 // ThunkCreators
@@ -72,7 +81,6 @@ export const setProductsTC = () => (dispatch: Dispatch) => {
 
     }
 }
-
 export const setPartProductsTC = () => (dispatch: Dispatch) => {
     try {
         dispatch(loadingSpinnerAC(true))
@@ -86,7 +94,6 @@ export const setPartProductsTC = () => (dispatch: Dispatch) => {
 
     }
 }
-
 export const setAllProductsTC = () => (dispatch: Dispatch) => {
     try {
         dispatch(loadingSpinnerAC(true))
@@ -100,12 +107,27 @@ export const setAllProductsTC = () => (dispatch: Dispatch) => {
 
     }
 }
+export const setProductTC = (id: number) => (dispatch: Dispatch) => {
+    try {
+        dispatch(loadingSpinnerAC(true))
+        API.getProductId(id)
+            .then(res => res.json())
+            .then(json => {
+                dispatch(setProductAC(json))
+                dispatch(loadingSpinnerAC(false))
+            })
+    } catch (e) {
+
+    }
+}
 
 
 type SetProductsActionType = ReturnType<typeof setProductsAC>
 type SetPartProductsActionType = ReturnType<typeof setPartProductsAC>
 type SetAllProductsActionType = ReturnType<typeof setAllProductsAC>
 type loadingSpinnerActionType = ReturnType<typeof loadingSpinnerAC>
+type SetProductActionType = ReturnType<typeof setProductAC>
 
 type ActionTypes = SetProductsActionType | SetAllProductsActionType | SetPartProductsActionType
     | loadingSpinnerActionType
+    | SetProductActionType
