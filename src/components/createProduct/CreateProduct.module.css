@@ -1,3 +1,16 @@
 .form {
-    /*display: flex;*/
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.formItem {
+    margin-right: 10px;
+    padding-left: 10px;
+    border-radius: 4px;
+}
+
+.productWrapper {
+    float: left;
+    margin-right: 40px;
 }

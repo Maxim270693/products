@@ -3,72 +3,91 @@ import s from './CreateProduct.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../main/bll/store/store";
 import {postProductTC, ProductFormType} from "../../main/bll/reducers/productReducer";
+import Spinner from "../spinner/Spinner";
 
 const CreateProduct = () => {
-    const dispatch = useDispatch();
+        const dispatch = useDispatch();
 
-    const productsForm = useSelector<RootStateType, Array<ProductFormType>>(state => state.products.productsForm)
+        const productsForm = useSelector<RootStateType, Array<ProductFormType>>(state => state.products.productsForm)
+        const isLoading = useSelector<RootStateType, boolean>(state => state.products.isLoading)
 
-    const [value, setValue] = useState('')
-    const [number, setNumber] = useState('')
-    const [area, setArea] = useState('')
+        const [value, setValue] = useState('')
+        const [number, setNumber] = useState('')
+        const [area, setArea] = useState('')
+        const [date, setDate] = useState('')
 
-    const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
-    }
+        const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+            event.preventDefault()
+        }
 
-    const onChangeHandlerName = (event: ChangeEvent<HTMLInputElement>) => {
-        setValue(event.currentTarget.value)
-    }
-    const onChangeHandlerNumber = (event: ChangeEvent<HTMLInputElement>) => {
-        setNumber(event.currentTarget.value)
-    }
-    const onChangeHandlerArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setArea(event.currentTarget.value)
-    }
+        const onChangeHandlerName = (event: ChangeEvent<HTMLInputElement>) => {
+            setValue(event.currentTarget.value)
+        }
+        const onChangeHandlerNumber = (event: ChangeEvent<HTMLInputElement>) => {
+            setNumber(event.currentTarget.value)
+        }
+        const onChangeHandlerArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
+            setArea(event.currentTarget.value)
+        }
 
-    const addProduct = (image: string, title: string, price: number, description: string, category: string) => {
-        dispatch(postProductTC({image, title, price, description, category}))
-    }
+        const addProduct = (image: string, title: string, price: number, description: string, category: string) => {
+            dispatch(postProductTC({image, title, price, description, category}))
+            getCurrentDate()
+        }
 
-    return (
-        <div>
-            <form className={s.form} onSubmit={onSubmit}>
-                <label>
-                    Название:
+        function getCurrentDate(separator = '') {
+            let newDate = new Date()
+            let date = newDate.getDate();
+            let month = newDate.getMonth() + 1;
+            let year = newDate.getFullYear();
+
+            return setDate(`${year}.${separator}${month < 10 ? `0${month}` : `${month}`}.${separator}${date}`)
+        }
+
+        return (
+            <div>
+                <form className={s.form} onSubmit={onSubmit}>
                     <input type="text"
+                           className={s.formItem}
                            value={value}
+                           placeholder='название'
                            onChange={onChangeHandlerName}
                     />
-                </label>
-                <label>
-                    Цена:
                     <input type="number"
+                           className={s.formItem}
                            value={number}
+                           placeholder='цена'
                            onChange={onChangeHandlerNumber}
                     />
-                </label>
-                <textarea placeholder='описание'
-                          value={area}
-                          onChange={onChangeHandlerArea}
-                />
-                <input type="checkbox"/>
-                <input type="submit"
-                       value='add product'
-                       onClick={() => addProduct('https://i.pravatar.cc', value, +number, area, '123')}/>
-            </form>
-            {productsForm.map(productForm => {
-                return <>
-                    <div><img style={{width: '200px'}} src={productForm.image} alt="img"/></div>
-                    <div>{productForm.title}</div>
-                    <br/>
-                    <div>{productForm.description}</div>
-                    <br/>
-                    <h3>{productForm.price}$</h3> <br/>
-                </>
-            })}
-        </div>
-    );
-};
+                    <textarea placeholder='описание'
+                              className={s.formItem}
+                              value={area}
+                              onChange={onChangeHandlerArea}
+                    />
+                    <input type="submit"
+                           value='add product'
+                           onClick={() => {
+                               addProduct('https://i.pravatar.cc', value, +number, area, '123')
+                           }}/>
+                </form>
+                {isLoading
+                    ? <Spinner/>
+                    : <>
+                        {productsForm.map(productForm => <div className={s.productWrapper}>
+                                <div><img style={{width: '200px'}} src={productForm.image} alt="img"/>
+                                </div>
+                                <div>{productForm.title}</div>
+                                <br/>
+                                <div>{productForm.description}</div>
+                                <br/>
+                                <h3>{productForm.price}$</h3> <br/>
+                                {date}
+                            </div>
+                        )}
+                    </>}
+            </div>
+        );
+    }
+;
 
 export default CreateProduct;
