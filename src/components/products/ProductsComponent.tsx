@@ -18,8 +18,8 @@ const ProductsComponent: React.FC<PropsType> = ({product}) => {
                     />
                 </NavLink>
             </div>
-            <div>{product.title}</div>
-            <div>{product.price}</div>
+            <h5>{product.title}</h5>
+            <h3>{product.price}$</h3>
         </div>
     );
 };

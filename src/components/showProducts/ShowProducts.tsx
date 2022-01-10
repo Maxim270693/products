@@ -25,16 +25,18 @@ const ShowProducts = () => {
         <div>
             <h1 className={s.title}>Products</h1>
             {isLoading ? (<Spinner/>)
-                : (<div className={s.items}>
-                    {
-                        products?.map(product => <ProductsComponent product={product} key={product.id}/>)
-                    }
-                   <div>
-                       <button onClick={() => {}}>add 8 products</button>
-                       <button onClick={() => dispatch(setPartProductsTC())}>add 16 products</button>
-                       <button onClick={() => dispatch(setAllProductsTC())}>all products</button>
-                   </div>
-                </div>)
+                : <>
+                    <div className={s.items}>
+                        {
+                            products?.map(product => <ProductsComponent product={product} key={product.id}/>)
+                        }
+                    </div>
+                    <div>
+                        <button onClick={() => {}}>add 8 products</button>
+                        <button onClick={() => dispatch(setPartProductsTC())}>add 16 products</button>
+                        <button onClick={() => dispatch(setAllProductsTC())}>all products</button>
+                    </div>
+                </>
             }
         </div>
     );

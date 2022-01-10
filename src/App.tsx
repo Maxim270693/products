@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {NavLink, Route, Routes} from "react-router-dom";
 import ShowProducts from "./components/showProducts/ShowProducts";
-import CreateProduct from "./components/CreateProduct";
+import CreateProduct from "./components/createProduct/CreateProduct";
 import EditingProduct from "./components/EditingProduct";
 import Product from "./components/pdoduct/Product";
 

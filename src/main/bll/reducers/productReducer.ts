@@ -6,7 +6,16 @@ const SET_PART_PRODUCTS = 'SET_PART_PRODUCTS';
 const SET_ALL_PRODUCTS = 'SET_ALL_PRODUCTS';
 const IS_LOADING = 'IS_LOADING';
 const SET_PRODUCT = 'SET_PRODUCT';
+const POST_PRODUCT = 'POST_PRODUCT';
 
+
+export type ProductFormType = {
+    title: string
+    price: number
+    description: string
+    image: string
+    category: string
+}
 
 export type ProductType = {
     category: string
@@ -24,12 +33,14 @@ export type ProductType = {
 type InitialStateType = {
     products: Array<ProductType>
     product: ProductType
+    productsForm: Array<ProductFormType>
     isLoading: boolean
 }
 
 const initialState = {
     products: [] as Array<ProductType>,
     product: {} as ProductType,
+    productsForm: [] as Array<ProductFormType>,
     isLoading: false,
 }
 
@@ -48,6 +59,8 @@ export const productsReducer = (state = initialState, action: ActionTypes): Init
                 ...state,
                 product: action.payload
             }
+        case POST_PRODUCT:
+            return {...state, productsForm: [...state.productsForm, action.payload]}
         default:
             return state
     }
@@ -65,6 +78,7 @@ const setAllProductsAC = (products: Array<ProductType>) => ({
 } as const)
 const loadingSpinnerAC = (value: boolean) => ({type: IS_LOADING, value} as const)
 const setProductAC = (payload: ProductType) => ({type: SET_PRODUCT, payload} as const)
+const postProductAC = (payload: ProductFormType) => ({type: POST_PRODUCT, payload} as const)
 
 
 // ThunkCreators
@@ -120,6 +134,20 @@ export const setProductTC = (id: number) => (dispatch: Dispatch) => {
 
     }
 }
+export const postProductTC = (payload: ProductFormType) => (dispatch: Dispatch) => {
+    try {
+        dispatch(loadingSpinnerAC(true))
+        const {image, title, price, description, category} = payload
+        API.postProduct(image, title, price, description, category)
+            .then(res => res.json())
+            .then(json => {
+                dispatch(postProductAC(json))
+                dispatch(loadingSpinnerAC(false))
+            })
+    } catch (e) {
+
+    }
+}
 
 
 type SetProductsActionType = ReturnType<typeof setProductsAC>
@@ -127,7 +155,7 @@ type SetPartProductsActionType = ReturnType<typeof setPartProductsAC>
 type SetAllProductsActionType = ReturnType<typeof setAllProductsAC>
 type loadingSpinnerActionType = ReturnType<typeof loadingSpinnerAC>
 type SetProductActionType = ReturnType<typeof setProductAC>
+type PostProductActionType = ReturnType<typeof postProductAC>
 
 type ActionTypes = SetProductsActionType | SetAllProductsActionType | SetPartProductsActionType
-    | loadingSpinnerActionType
-    | SetProductActionType
+    | loadingSpinnerActionType | SetProductActionType | PostProductActionType
