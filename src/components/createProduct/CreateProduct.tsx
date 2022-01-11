@@ -46,6 +46,7 @@ const CreateProduct = () => {
 
         return (
             <div>
+                <h1>Create Product</h1>
                 <form className={s.form} onSubmit={onSubmit}>
                     <input type="text"
                            className={s.formItem}
@@ -66,6 +67,7 @@ const CreateProduct = () => {
                     />
                     <input type="submit"
                            value='add product'
+                           className={s.btn}
                            onClick={() => {
                                addProduct('https://i.pravatar.cc', value, +number, area, '123')
                            }}/>
@@ -76,11 +78,10 @@ const CreateProduct = () => {
                         {productsForm.map(productForm => <div className={s.productWrapper}>
                                 <div><img style={{width: '200px'}} src={productForm.image} alt="img"/>
                                 </div>
-                                <div>{productForm.title}</div>
-                                <br/>
+                                <h3>{productForm.title}</h3>
                                 <div>{productForm.description}</div>
+                                <h4>{productForm.price}$</h4>
                                 <br/>
-                                <h3>{productForm.price}$</h3> <br/>
                                 {date}
                             </div>
                         )}

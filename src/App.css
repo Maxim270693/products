@@ -5,12 +5,17 @@
 
 h1 {
   text-align: center;
+  padding-top: 40px;
+  letter-spacing: 0.04em;
+  font-size: 38px;
+  text-transform: uppercase;
+  text-shadow: 1px 5px 6px #000;
 }
 
 .wrapper {
   display: flex;
   justify-content: space-around;
-  background-color: lightgray;
+  background-color: cadetblue;
   padding: 10px 0;
 }
 
@@ -23,4 +28,5 @@ h1 {
 .wrapper_item:hover {
   transition-duration: 500ms;
   text-shadow: 1px 1px 2px black;
+  color: cornsilk;
 }

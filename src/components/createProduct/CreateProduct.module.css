@@ -10,6 +10,20 @@
     border-radius: 4px;
 }
 
+.btn {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 0 5px;
+    background: cadetblue;
+    color: cornsilk;
+}
+
+.btn:hover {
+    transition-duration: 0.5s;
+    background: cornsilk;
+    color: cadetblue;
+}
+
 .productWrapper {
     float: left;
     margin-right: 40px;

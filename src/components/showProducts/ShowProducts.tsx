@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../main/bll/store/store";
 import ProductsComponent from "../products/ProductsComponent";
 import Spinner from "../spinner/Spinner";
-import s from './ShowProducts.module.css'
+import s from './ShowProducts.module.css';
 
 const ShowProducts = () => {
     const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const ShowProducts = () => {
 
     return (
         <div>
-            <h1 className={s.title}>Products</h1>
+            <h1>Products</h1>
             {isLoading ? (<Spinner/>)
                 : <>
                     <div className={s.items}>
@@ -32,9 +32,9 @@ const ShowProducts = () => {
                         }
                     </div>
                     <div>
-                        <button onClick={() => {}}>add 8 products</button>
-                        <button onClick={() => dispatch(setPartProductsTC())}>add 16 products</button>
-                        <button onClick={() => dispatch(setAllProductsTC())}>all products</button>
+                        <button className={s.items_item} onClick={() => {}}>add 8 products</button>
+                        <button className={s.items_item} onClick={() => dispatch(setPartProductsTC())}>add 16 products</button>
+                        <button className={s.items_item} onClick={() => dispatch(setAllProductsTC())}>all products</button>
                     </div>
                 </>
             }

@@ -1,14 +1,22 @@
-.title {
-    padding-top: 40px;
-    letter-spacing: 0.04em;
-    font-size: 38px;
-    text-transform: uppercase;
-    text-shadow: 1px 5px 6px #000;
-}
-
 .items {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     margin: 40px 0 0 30px;
+}
+
+.items_item {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 5px 15px;
+    background: cadetblue;
+    color: cornsilk;
+    margin-left: 50px;
+
+}
+
+.items_item:hover {
+    transition-duration: 0.5s;
+    background: cornsilk;
+    color: cadetblue
 }
