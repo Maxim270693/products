@@ -24,6 +24,16 @@
     color: cadetblue;
 }
 
+.errorWrapper {
+    width: 1027px;
+    text-align: center;
+}
+
+.error {
+    color: #cc4545;
+    font-size: 14px;
+}
+
 .productWrapper {
     float: left;
     margin-right: 40px;

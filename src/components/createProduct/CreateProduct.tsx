@@ -16,15 +16,20 @@ const CreateProduct = () => {
         const [area, setArea] = useState('')
         const [date, setDate] = useState('')
 
+        const [errorValue, setErrorValue] = useState('')
+        const [errorNumber, setErrorNumber] = useState('')
+
         const onSubmit = (event: FormEvent<HTMLFormElement>) => {
             event.preventDefault()
         }
 
         const onChangeHandlerName = (event: ChangeEvent<HTMLInputElement>) => {
             setValue(event.currentTarget.value)
+            setErrorValue('')
         }
         const onChangeHandlerNumber = (event: ChangeEvent<HTMLInputElement>) => {
             setNumber(event.currentTarget.value)
+            setErrorNumber('')
         }
         const onChangeHandlerArea = (event: ChangeEvent<HTMLTextAreaElement>) => {
             setArea(event.currentTarget.value)
@@ -44,6 +49,17 @@ const CreateProduct = () => {
             return setDate(`${year}.${separator}${month < 10 ? `0${month}` : `${month}`}.${separator}${date}`)
         }
 
+        const validateDate = () => {
+            if (!value) {
+                return setErrorValue("Поле 'название' не может быть пустым")
+            }
+            if (!number) {
+                return setErrorNumber("Поле 'цена' не может быть пустым")
+            } else if (number.length < 2) {
+                return setErrorNumber('цена не может быть менее 2 сисмволов')
+            }
+        }
+
         return (
             <div>
                 <h1>Create Product</h1>
@@ -51,12 +67,14 @@ const CreateProduct = () => {
                     <input type="text"
                            className={s.formItem}
                            value={value}
+                           onBlur={validateDate}
                            placeholder='название'
                            onChange={onChangeHandlerName}
                     />
                     <input type="number"
                            className={s.formItem}
                            value={number}
+                           onBlur={validateDate}
                            placeholder='цена'
                            onChange={onChangeHandlerNumber}
                     />
@@ -69,9 +87,15 @@ const CreateProduct = () => {
                            value='add product'
                            className={s.btn}
                            onClick={() => {
-                               addProduct('https://i.pravatar.cc', value, +number, area, '123')
+                               if(!errorValue && !errorNumber && value !== '' && number !== '' ) {
+                                   addProduct('https://i.pravatar.cc', value, +number, area, '123')
+                               }
                            }}/>
                 </form>
+                <div className={s.errorWrapper}>
+                    <span className={errorValue ? s.error : ''}>{errorValue}</span>
+                    <span className={errorNumber ? s.error : ''}>{errorNumber}</span>
+                </div>
                 {isLoading
                     ? <Spinner/>
                     : <>

@@ -7,6 +7,7 @@ const SET_ALL_PRODUCTS = 'SET_ALL_PRODUCTS';
 const IS_LOADING = 'IS_LOADING';
 const SET_PRODUCT = 'SET_PRODUCT';
 const POST_PRODUCT = 'POST_PRODUCT';
+const SET_ERROR = 'SET_ERROR';
 
 
 export type ProductFormType = {
@@ -35,6 +36,7 @@ type InitialStateType = {
     product: ProductType
     productsForm: Array<ProductFormType>
     isLoading: boolean
+    error: null | string
 }
 
 const initialState = {
@@ -42,6 +44,7 @@ const initialState = {
     product: {} as ProductType,
     productsForm: [] as Array<ProductFormType>,
     isLoading: false,
+    error: null as string | null,
 }
 
 export const productsReducer = (state = initialState, action: ActionTypes): InitialStateType => {
@@ -61,6 +64,8 @@ export const productsReducer = (state = initialState, action: ActionTypes): Init
             }
         case POST_PRODUCT:
             return {...state, productsForm: [...state.productsForm, action.payload]}
+        case SET_ERROR:
+            return {...state, error: action.error}
         default:
             return state
     }
@@ -79,6 +84,7 @@ const setAllProductsAC = (products: Array<ProductType>) => ({
 const loadingSpinnerAC = (value: boolean) => ({type: IS_LOADING, value} as const)
 const setProductAC = (payload: ProductType) => ({type: SET_PRODUCT, payload} as const)
 const postProductAC = (payload: ProductFormType) => ({type: POST_PRODUCT, payload} as const)
+const setErrorAC = (error: string) => ({type: SET_ERROR, error} as const)
 
 
 // ThunkCreators
@@ -92,7 +98,6 @@ export const setProductsTC = () => (dispatch: Dispatch) => {
                 dispatch(loadingSpinnerAC(false))
             })
     } catch (e) {
-
     }
 }
 export const setPartProductsTC = () => (dispatch: Dispatch) => {
@@ -156,6 +161,8 @@ type SetAllProductsActionType = ReturnType<typeof setAllProductsAC>
 type loadingSpinnerActionType = ReturnType<typeof loadingSpinnerAC>
 type SetProductActionType = ReturnType<typeof setProductAC>
 type PostProductActionType = ReturnType<typeof postProductAC>
+type SetErrorActionType = ReturnType<typeof setErrorAC>
 
 type ActionTypes = SetProductsActionType | SetAllProductsActionType | SetPartProductsActionType
     | loadingSpinnerActionType | SetProductActionType | PostProductActionType
+    | SetErrorActionType
